@@ -31,17 +31,18 @@
   a:hover{ color: var(--accent); }
 
   /* Header */
-  header{ text-align: center; padding-bottom: 8px; }
+  header{ display: flex; align-items: center; gap: 28px; padding-bottom: 8px; }
   .photo{
-    width: 110px; height: 138px;
-    margin: 0 auto 18px;
-    border: 1px solid var(--accent);
+    flex: 0 0 auto;
+    width: 128px; height: 156px;
+    border: 1px solid #d4d4d4;
     display: flex; align-items: center; justify-content: center;
     color: var(--accent);
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     letter-spacing: .05em;
     background: var(--accent-soft);
   }
+  .header-info{ flex: 1 1 auto; min-width: 0; }
   h1{
     font-size: 2.3rem;
     font-weight: normal;
@@ -52,13 +53,8 @@
   .contact{ margin: 14px 0 0; color: var(--fg-muted); font-size: .98rem; }
   .contact .sep{ color: var(--accent); }
 
-  /* Section boxes */
-  section{
-    border: 1px solid var(--accent);
-    padding: 18px 22px;
-    margin-top: 22px;
-    background: var(--bg);
-  }
+  /* Sections */
+  section{ margin-top: 34px; }
   h2{
     font-size: 1.22rem;
     font-weight: bold;
@@ -118,7 +114,8 @@
 
   @media (max-width: 640px){
     .wrap{ padding: 24px 14px 48px; }
-    section{ padding: 15px 16px; }
+    header{ flex-direction: column; text-align: center; gap: 18px; }
+    .photo{ width: 110px; height: 138px; }
     h1{ font-size: 1.9rem; }
   }
 </style>
@@ -129,13 +126,15 @@
 
   <header>
     <div class="photo" aria-label="Photo placeholder">MX</div>
-    <h1>Mengqing Xu</h1>
-    <p class="affil">M.Sc. student in Computer Science &amp; Technology &middot; Southern University of Science and Technology (SUSTech)</p>
-    <p class="contact">
-      E-mail: <a href="mailto:xumq2025@mail.sustech.edu.cn">xumq2025@mail.sustech.edu.cn</a>
-      <span class="sep">&middot;</span>
-      <a href="https://scholar.google.com/citations?user=1UBB0nkAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
-    </p>
+    <div class="header-info">
+      <h1>Mengqing Xu</h1>
+      <p class="affil">M.Sc. student in Computer Science &amp; Technology &middot; Southern University of Science and Technology (SUSTech)</p>
+      <p class="contact">
+        E-mail: <a href="mailto:xumq2025@mail.sustech.edu.cn">xumq2025@mail.sustech.edu.cn</a>
+        <span class="sep">&middot;</span>
+        <a href="https://scholar.google.com/citations?user=1UBB0nkAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+      </p>
+    </div>
   </header>
 
   <section>
@@ -169,11 +168,11 @@
 
 
   <section>
-    <h2>Recent News</h2>
+    <h2>Current Activities & News</h2>
     <ul class="news">
       <!-- <li><span class="date">2026</span> &mdash; Manuscript on reinforcement-learning hyper-heuristics with an adaptive penalty parameter is <b>under review</b> at AAAI 2027.</li> -->
       <li><span class="date">Sep 2026</span> &mdash; Awarded the <b>Top-tier Graduate Academic Scholarship</b> and <b>Research Assistantship Award</b>, SUSTech.</li>
-      <li><span class="date">Aug 2026</span> &mdash; Presented &ldquo;On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics&rdquo; at PPSN 2026, Trento, Italy.</li>
+      <!-- <li><span class="date">Aug 2026</span> &mdash; Presented &ldquo;On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics&rdquo; at PPSN 2026, Trento, Italy.</li> -->
       <li><span class="date">Jun 2026</span> &mdash; Our Paper <b>"On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics"</b> has been accepted at the International Conference on Parallel Problem Solving from Nature conference (PPSN 2026).</li>
       <li><span class="date">Jun 2026</span> &mdash; Our Paper <b>"Automatic Adaptation of Mutation Rates for Move Acceptance Hyper-Heuristics Using Hypermutations"</b> has been accepted at IEEE Transactions on Evolutionary Computation (TEVC).</li>
       <!-- <li><span class="date">Sep 2025</span> &mdash; Began my M.Sc. at SUSTech under Prof. Pietro S. Oliveto.</li> -->
