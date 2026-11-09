@@ -2,785 +2,268 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Mengqing Xu — M.Sc. student in Computer Science at SUSTech. Runtime analysis of randomized search heuristics, evolutionary algorithms, and hyper-heuristics.">
 <title>Mengqing Xu</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-
 <style>
-  /* ===== Design plan =====
-     Color: white canvas, near-black ink, indigo->violet->sky accent gradient.
-     Type:  Lora (display/serif) + Inter (body/sans).
-     Layout: single scroll, sticky nav + reading progress, hero -> sections -> contact.
-  */
   :root{
-    --bg:        #ffffff;
-    --bg-soft:   #f6f7fb;
-    --bg-card:   #ffffff;
-    --fg:        #171b26;
-    --fg-muted:  #5b6270;
-    --fg-faint:  #8a90a0;
-    --border:    #e7e9f0;
-    --accent:    #6366f1;
-    --accent-2:  #8b5cf6;
-    --accent-3:  #0ea5e9;
-    --accent-soft:#eef0ff;
-    --ring:      rgba(99,102,241,.14);
-    --shadow:    0 1px 2px rgba(23,27,38,.04), 0 8px 24px rgba(23,27,38,.06);
-    --grad:      linear-gradient(120deg, var(--accent), var(--accent-2) 45%, var(--accent-3));
-    --font-display: 'Lora', Georgia, 'Times New Roman', serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --bg:          #ffffff;
+    --fg:          #1a1a1a;
+    --fg-muted:    #3a3a3a;
+    --accent:      #008080;   /* teal */
+    --accent-dark: #006060;
+    --accent-soft: #eaf4f4;
+    --font: Georgia, 'Times New Roman', Times, serif;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:        #0b0f1a;
-      --bg-soft:   #101524;
-      --bg-card:   #121826;
-      --fg:        #e7eaf2;
-      --fg-muted:  #a6adbf;
-      --fg-faint:  #7b8296;
-      --border:    #222939;
-      --accent-soft:rgba(99,102,241,.16);
-      --ring:      rgba(139,92,246,.28);
-      --shadow:    0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:        #0b0f1a;
-    --bg-soft:   #101524;
-    --bg-card:   #121826;
-    --fg:        #e7eaf2;
-    --fg-muted:  #a6adbf;
-    --fg-faint:  #7b8296;
-    --border:    #222939;
-    --accent-soft:rgba(99,102,241,.16);
-    --ring:      rgba(139,92,246,.28);
-    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
-    color-scheme: dark;
-  }
-
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
   body{
     margin: 0;
-    font-family: var(--font-body);
     background: var(--bg);
     color: var(--fg);
-    line-height: 1.65;
+    font-family: var(--font);
+    line-height: 1.62;
     font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
-  ::selection{ background: var(--accent); color: #fff; }
-  a{ color: var(--accent); text-decoration: none; }
-  a:hover{ text-decoration: underline; }
-  h1,h2,h3{ font-family: var(--font-display); font-weight: 600; line-height: 1.2; text-wrap: balance; }
-  h2{ font-size: 1.75rem; margin: 0; }
-  img{ max-width: 100%; }
+  .wrap{ max-width: 880px; margin: 0 auto; padding: 34px 20px 60px; }
+  a{ color: var(--accent-dark); }
+  a:hover{ color: var(--accent); }
 
-  .wrap{ max-width: 900px; margin: 0 auto; }
+  /* Header */
+  header{ text-align: center; padding-bottom: 8px; }
+  .photo{
+    width: 110px; height: 138px;
+    margin: 0 auto 18px;
+    border: 1px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+    font-size: 1.6rem;
+    letter-spacing: .05em;
+    background: var(--accent-soft);
+  }
+  h1{
+    font-size: 2.3rem;
+    font-weight: normal;
+    margin: 0 0 6px;
+    letter-spacing: .01em;
+  }
+  .affil{ margin: 0; color: var(--fg-muted); font-size: 1.05rem; }
+  .contact{ margin: 14px 0 0; color: var(--fg-muted); font-size: .98rem; }
+  .contact .sep{ color: var(--accent); }
 
-  /* ===== Nav ===== */
-  .nav{
-    position: sticky;
-    top: env(safe-area-inset-top, 0px);
-    z-index: 50;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    -webkit-backdrop-filter: saturate(1.4) blur(12px);
-    backdrop-filter: saturate(1.4) blur(12px);
-    border-bottom: 1px solid var(--border);
+  /* Section boxes */
+  section{
+    border: 1px solid var(--accent);
+    padding: 18px 22px;
+    margin-top: 22px;
+    background: var(--bg);
   }
-  .nav-inner{
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    height: 56px;
-    padding-inline: 4px;
+  h2{
+    font-size: 1.22rem;
+    font-weight: bold;
+    color: var(--accent-dark);
+    margin: 0 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--accent);
   }
-  .brand{
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.06rem;
-    color: var(--fg);
-  }
-  .brand:hover{ text-decoration: none; }
-  .brand .dot{ color: var(--accent); }
-  .nav-links{ display: flex; gap: 2px; }
-  .nav-links a{
+  h3{ font-size: 1.05rem; margin: 0 0 2px; }
+  p{ margin: 0 0 10px; }
+  p:last-child{ margin-bottom: 0; }
+
+  ul.plain{ margin: 0; padding-left: 20px; }
+  ul.plain li{ margin-bottom: 8px; }
+  ul.plain li:last-child{ margin-bottom: 0; }
+
+  /* News */
+  ul.news{ list-style: none; margin: 0; padding: 0; }
+  ul.news li{ margin-bottom: 9px; padding-left: 0; }
+  ul.news li:last-child{ margin-bottom: 0; }
+  ul.news .date{ color: var(--accent); font-weight: bold; }
+
+  /* Education */
+  .edu{ margin-bottom: 14px; }
+  .edu:last-child{ margin-bottom: 0; }
+  .edu .head{ font-weight: bold; }
+  .edu .meta{ font-style: italic; color: var(--fg-muted); font-size: .95rem; }
+  .edu .note{ color: var(--fg-muted); font-size: .95rem; }
+
+  /* Research experience */
+  .exp{ margin-bottom: 20px; }
+  .exp:last-child{ margin-bottom: 0; }
+  .exp .meta{ font-style: italic; color: var(--accent-dark); font-size: .92rem; margin: 2px 0 8px; }
+  .exp ul{ margin: 0; padding-left: 20px; }
+  .exp ul li{ margin-bottom: 7px; }
+  .exp .outcome{ margin-top: 8px; font-size: .95rem; }
+  .exp .outcome .ev{ font-weight: bold; color: var(--accent-dark); }
+
+  /* Publications */
+  .pub{ margin-bottom: 18px; }
+  .pub:last-child{ margin-bottom: 0; }
+  .pub .title{ font-weight: bold; margin: 0 0 2px; }
+  .pub .authors{ color: var(--fg-muted); margin: 0 0 2px; }
+  .pub .authors b{ color: var(--fg); }
+  .pub .venue{ font-style: italic; color: var(--accent-dark); margin: 0; }
+  .pub .venue .status{ font-style: normal; font-weight: bold; }
+
+  .note{ font-size: .9rem; color: var(--fg-muted); font-style: italic; }
+
+  footer{
+    text-align: center;
     color: var(--fg-muted);
     font-size: .9rem;
-    font-weight: 500;
-    padding: 6px 11px;
-    border-radius: 8px;
-    transition: color .15s, background .15s;
+    margin-top: 34px;
   }
-  .nav-links a:hover{ color: var(--fg); background: var(--accent-soft); text-decoration: none; }
-  .nav-toggle{
-    display: none;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--fg);
-    border-radius: 8px;
-    width: 38px; height: 38px;
-    font-size: 1.05rem;
-    cursor: pointer;
-  }
-  .progress{
-    position: absolute;
-    left: 0; bottom: -1px;
-    height: 2px;
-    width: 0;
-    background: var(--grad);
-    transition: width .08s linear;
-  }
+  footer a{ color: var(--accent-dark); }
 
-  /* ===== Hero ===== */
-  .hero{
-    text-align: center;
-    padding: 72px 0 56px;
-    position: relative;
-  }
-  .hero::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(640px 300px at 50% -80px, var(--ring), transparent 70%);
-    pointer-events: none;
-  }
-  .hero > *{ position: relative; }
-  .portrait{
-    width: 118px; height: 118px;
-    margin: 0 auto 24px;
-    border-radius: 50%;
-    background: var(--grad);
-    color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display);
-    font-size: 2.4rem;
-    font-weight: 600;
-    letter-spacing: .02em;
-    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--border), 0 14px 34px rgba(99,102,241,.28);
-  }
-  .hero h1{
-    font-size: clamp(2.2rem, 6vw, 3.1rem);
-    margin: 0 0 6px;
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .hero .role{
-    font-size: 1.02rem;
-    color: var(--fg-muted);
-    margin: 0 0 18px;
-    font-weight: 500;
-  }
-  .hero .bio{
-    max-width: 640px;
-    margin: 0 auto 22px;
-    color: var(--fg-muted);
-    font-size: 1.02rem;
-  }
-  .tags{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 640px; margin: 0 auto 28px; }
-  .tag{
-    font-size: .8rem;
-    font-weight: 500;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
-    padding: 5px 12px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-  .ctas{ display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-  .btn{
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: .92rem; font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--fg);
-    transition: transform .12s, border-color .15s, box-shadow .15s;
-  }
-  .btn:hover{ text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-  .btn.primary{
-    background: var(--grad);
-    color: #fff;
-    border: none;
-  }
-  .btn.primary:hover{ box-shadow: 0 10px 26px rgba(99,102,241,.35); }
-
-  /* ===== Sections ===== */
-  section{ padding: 52px 0; }
-  section + section, .hero + section{ border-top: 1px solid var(--border); }
-  section{ scroll-margin-top: 76px; }
-  .sec-head{ margin-bottom: 26px; }
-  .sec-head .eyebrow{
-    font-size: .74rem;
-    font-weight: 600;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 6px;
-  }
-  .sec-head .bar{
-    width: 44px; height: 3px;
-    border-radius: 2px;
-    background: var(--grad);
-    margin-top: 12px;
-  }
-  .lead{ color: var(--fg-muted); max-width: 70ch; }
-
-  /* ===== News ===== */
-  .news{ list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-  .news li{
-    display: grid;
-    grid-template-columns: 92px 1fr;
-    gap: 18px;
-    padding: 14px 0;
-    border-bottom: 1px dashed var(--border);
-  }
-  .news li:last-child{ border-bottom: none; }
-  .news .date{
-    font-size: .82rem;
-    font-weight: 600;
-    color: var(--fg-faint);
-    font-variant-numeric: tabular-nums;
-    padding-top: 2px;
-  }
-  .news .txt{ color: var(--fg-muted); }
-  .news .txt b{ color: var(--fg); font-weight: 600; }
-  .news .txt a{ font-weight: 500; }
-
-  /* ===== Education timeline ===== */
-  .edu{ display: grid; gap: 14px; }
-  .edu .item{
-    position: relative;
-    padding: 18px 20px 18px 34px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-  }
-  .edu .item::before{
-    content: "";
-    position: absolute;
-    left: 16px; top: 25px;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--grad);
-  }
-  .edu .top{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
-  .edu .school{ font-weight: 700; color: var(--fg); }
-  .edu .when{ font-size: .84rem; color: var(--fg-faint); font-variant-numeric: tabular-nums; }
-  .edu .what{ color: var(--fg-muted); font-size: .95rem; margin-top: 3px; }
-  .edu .note{ color: var(--fg-faint); font-size: .88rem; margin-top: 2px; }
-
-  /* ===== Publications ===== */
-  .pubs-note{ font-size: .85rem; color: var(--fg-faint); font-style: italic; margin-bottom: 18px; }
-  .pub{ display: grid; gap: 14px; }
-  .pub .item{
-    padding: 20px 22px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    transition: transform .12s, box-shadow .15s;
-  }
-  .pub .item:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(23,27,38,.10); }
-  .pub .badge{
-    display: inline-block;
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border-radius: 6px;
-    padding: 3px 9px;
-    margin-bottom: 10px;
-  }
-  .pub .badge.review{ color: #b45309; background: color-mix(in srgb, #f59e0b 14%, transparent); }
-  .pub h3{ font-size: 1.12rem; margin: 0 0 8px; font-weight: 600; }
-  .pub h3 a{ color: var(--fg); }
-  .pub h3 a:hover{ color: var(--accent); text-decoration: none; }
-  .pub .authors{ color: var(--fg-muted); font-size: .94rem; }
-  .pub .authors b{ color: var(--fg); font-weight: 600; }
-  .pub .venue{ color: var(--fg-faint); font-size: .86rem; margin-top: 4px; font-style: italic; }
-
-  /* ===== Research / project cards ===== */
-  .proj{ display: grid; gap: 16px; }
-  .proj .card{
-    padding: 22px 24px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-  }
-  .proj .head{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; margin-bottom: 8px; }
-  .proj h3{ font-size: 1.18rem; margin: 0; }
-  .proj .span{ font-size: .84rem; color: var(--fg-faint); font-variant-numeric: tabular-nums; }
-  .proj .who{ font-size: .88rem; color: var(--fg-faint); margin: 0 0 12px; }
-  .proj ul{ margin: 0; padding-left: 20px; display: grid; gap: 7px; color: var(--fg-muted); font-size: .96rem; }
-  .proj ul b{ color: var(--fg); font-weight: 600; }
-  .proj .outcome{
-    margin-top: 14px;
-    font-size: .86rem;
-    color: var(--fg-muted);
-    padding: 9px 14px;
-    background: var(--bg-soft);
-    border-radius: 9px;
-  }
-  .proj .outcome b{ color: var(--fg); }
-
-  /* ===== Two-column: teaching / awards / skills / contact ===== */
-  .cols{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .card-min{
-    padding: 20px 22px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-  }
-  .card-min h3{ font-size: 1.02rem; margin: 0 0 12px; }
-  .line{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 9px 0; border-bottom: 1px dashed var(--border); color: var(--fg-muted); font-size: .95rem; }
-  .line:last-child{ border-bottom: none; }
-  .line .k{ font-weight: 600; color: var(--fg); }
-  .line .v{ color: var(--fg-faint); font-size: .86rem; font-variant-numeric: tabular-nums; }
-  ul.plain{ margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--fg-muted); font-size: .96rem; }
-  ul.plain b{ color: var(--fg); font-weight: 600; }
-
-  .skill-grid{ display: grid; gap: 14px; }
-  .skill-group h3{ font-size: 1rem; margin: 0 0 8px; }
-  .skill-group p{ margin: 0; color: var(--fg-muted); font-size: .95rem; }
-
-  /* ===== Contact ===== */
-  .contact{ text-align: center; padding-bottom: 60px; }
-  .contact .big{ font-size: 1.4rem; font-family: var(--font-display); margin-bottom: 6px; }
-  .contact .sub{ color: var(--fg-muted); margin-bottom: 22px; }
-  .contact-row{ display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-  .contact-email{
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: .95rem; font-weight: 500;
-    color: var(--fg);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px;
-  }
-  .copy-btn{
-    font-size: .78rem; font-weight: 600;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border: none;
-    border-radius: 7px;
-    padding: 4px 10px;
-    cursor: pointer;
-    font-family: var(--font-body);
-  }
-  .copy-btn:hover{ filter: brightness(.96); }
-
-  /* ===== Footer ===== */
-  footer{
-    border-top: 1px solid var(--border);
-    padding: 28px 0 40px;
-    text-align: center;
-    color: var(--fg-faint);
-    font-size: .85rem;
-  }
-  footer .name{ font-family: var(--font-display); color: var(--fg); font-size: 1rem; }
-
-  /* ===== Back to top ===== */
-  .back-top{
-    position: fixed;
-    right: max(18px, env(safe-area-inset-right, 0px));
-    bottom: max(18px, env(safe-area-inset-bottom, 0px));
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--fg);
-    font-size: 1.1rem;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity .2s, transform .2s;
-    z-index: 40;
-  }
-  .back-top.show{ opacity: 1; transform: none; pointer-events: auto; }
-  .back-top:hover{ border-color: var(--accent); color: var(--accent); }
-
-  @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior: auto; }
-    *{ transition: none !important; animation: none !important; }
-  }
-
-  @media (max-width: 680px){
-    .nav-toggle{ display: inline-flex; align-items: center; justify-content: center; }
-    .nav-links{
-      display: none;
-      position: absolute;
-      top: 56px; left: 0; right: 0;
-      flex-direction: column;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 16px 14px;
-      gap: 2px;
-    }
-    .nav-links.open{ display: flex; }
-    .nav-links a{ padding: 10px 12px; font-size: .98rem; }
-    .hero{ padding-top: 52px; }
-    .cols{ grid-template-columns: 1fr; }
-    .news li{ grid-template-columns: 1fr; gap: 2px; }
-    .news .date{ padding-top: 0; }
-    .edu .item{ padding-left: 20px; }
-    .edu .item::before{ left: 7px; }
+  @media (max-width: 640px){
+    .wrap{ padding: 24px 14px 48px; }
+    section{ padding: 15px 16px; }
+    h1{ font-size: 1.9rem; }
   }
 </style>
 </head>
 <body id="top">
 
-<header class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="#top">Mengqing Xu<span class="dot">.</span></a>
-    <nav class="nav-links" id="navLinks" aria-label="Sections">
-      <a href="#about">About</a>
-      <a href="#news">News</a>
-      <a href="#research">Research</a>
-      <a href="#publications">Publications</a>
-      <a href="#teaching">Teaching</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-  </div>
-  <div class="progress" id="progress" aria-hidden="true"></div>
-</header>
+<div class="wrap">
 
-<main>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="portrait" aria-label="Profile placeholder">MX</div>
+  <header>
+    <div class="photo" aria-label="Photo placeholder">MX</div>
     <h1>Mengqing Xu</h1>
-    <p class="role">M.Sc. student in Computer Science &amp; Technology · SUSTech</p>
-    <p class="bio">
-      I study the <b>runtime analysis of randomized search heuristics</b> and <b>evolutionary algorithms</b>,
-      designing hyper-heuristics with provable performance guarantees.
+    <p class="affil">M.Sc. student in Computer Science &amp; Technology &middot; Southern University of Science and Technology (SUSTech)</p>
+    <p class="contact">
+      E-mail: <a href="mailto:xumq2025@mail.sustech.edu.cn">xumq2025@mail.sustech.edu.cn</a>
+      <span class="sep">&middot;</span>
+      <a href="https://scholar.google.com/citations?user=1UBB0nkAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+      <span class="sep">&middot;</span>
+      <a href="Mengqing_Xu_Academic_CV.pdf" target="_blank" rel="noopener">Curriculum Vitae (PDF)</a>
     </p>
-    <div class="tags">
-      <span class="tag">Runtime Analysis</span>
-      <span class="tag">Randomized Search Heuristics</span>
-      <span class="tag">Evolutionary Algorithms</span>
-      <span class="tag">Hyper-Heuristics</span>
-      <span class="tag">Stochastic Optimization</span>
-      <span class="tag">Theoretical Computer Science</span>
+  </header>
+
+  <section>
+    <h2>About</h2>
+    <p>
+      I am an M.Sc. student in Computer Science and Technology at the
+      <b>Southern University of Science and Technology (SUSTech)</b>, advised by
+      <b>Prof. Pietro S. Oliveto</b>. My research lies in the
+      <b>runtime analysis of randomized search heuristics</b> and <b>evolutionary algorithms</b>:
+      understanding, rigorously, how long these algorithms take to find good solutions and why.
+    </p>
+    <p>
+      My current work focuses on <b>hyper-heuristics</b> &mdash; algorithms that combine and adapt a set of
+      simpler heuristics &mdash; and on establishing provable runtime guarantees for their performance.
+      I am seeking Ph.D. positions in <b>theoretical computer science</b>, especially in randomized search
+      heuristics and stochastic optimization.
+    </p>
+  </section>
+
+  <section>
+    <h2>News</h2>
+    <ul class="news">
+      <li><span class="date">2026</span> &mdash; Manuscript on reinforcement-learning hyper-heuristics with an adaptive penalty parameter is <b>under review</b> at AAAI 2027.</li>
+      <li><span class="date">2026</span> &mdash; Presented &ldquo;On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics&rdquo; at <b>PPSN 2026</b>, Trento, Italy.</li>
+      <li><span class="date">2026</span> &mdash; Paper accepted at <b>IEEE Transactions on Evolutionary Computation (TEVC)</b>.</li>
+      <li><span class="date">2026</span> &mdash; Awarded the <b>Top-tier Graduate Academic Scholarship</b> and <b>Research Assistantship Award</b>, SUSTech (Top 15%).</li>
+      <li><span class="date">Sep 2025</span> &mdash; Began my M.Sc. at SUSTech under Prof. Pietro S. Oliveto.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="edu">
+      <div class="head">M.Sc., Computer Science and Technology</div>
+      <div class="meta">Southern University of Science and Technology (SUSTech), Shenzhen, China &mdash; Sep 2025 &ndash; Jun 2028</div>
+      <div class="note">Advisor: Prof. Pietro S. Oliveto</div>
     </div>
-    <div class="ctas">
-      <a class="btn primary" href="mailto:xumq2025@mail.sustech.edu.cn">Email</a>
-      <a class="btn" href="https://scholar.google.com/citations?user=1UBB0nkAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
-      <a class="btn" href="Mengqing_Xu_Academic_CV.pdf" target="_blank" rel="noopener">Curriculum Vitae</a>
+    <div class="edu">
+      <div class="head">B.Eng., Computer Science and Technology</div>
+      <div class="meta">China University of Geosciences (Wuhan), Wuhan, China &mdash; Sep 2021 &ndash; Jun 2025</div>
+      <div class="note">GPA: 86 / 100</div>
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">About</p>
-        <h2>About me</h2>
-        <div class="bar"></div>
-      </div>
-      <p class="lead">
-        I am a Master's student in Computer Science and Technology at the
-        <b>Southern University of Science and Technology (SUSTech)</b>, advised by
-        <b>Prof. Pietro S. Oliveto</b>. My research lies in the theoretical analysis of
-        randomized search heuristics and evolutionary algorithms — understanding, rigorously, how long
-        these algorithms take to find good solutions and why.
-      </p>
-      <p class="lead">
-        My current work focuses on <b>hyper-heuristics</b>: algorithms that combine and adapt a set of
-        simpler heuristics. I design them and establish the first provable runtime guarantees for their
-        performance. I am seeking Ph.D. positions in <b>theoretical computer science</b>, especially in
-        randomized search heuristics and stochastic optimization.
-      </p>
-    </div>
-  </section>
+  <section>
+    <h2>Research Experience</h2>
 
-  <!-- News -->
-  <section id="news">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">News</p>
-        <h2>Recent updates</h2>
-        <div class="bar"></div>
-      </div>
-      <ul class="news">
-        <li>
-          <span class="date">2026</span>
-          <span class="txt">Our manuscript on <b>reinforcement-learning hyper-heuristics with an adaptive penalty parameter</b> is under review at AAAI 2027.</span>
-        </li>
-        <li>
-          <span class="date">2026</span>
-          <span class="txt">Presented <b>“On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics”</b> at PPSN 2026 in Trento, Italy.</span>
-        </li>
-        <li>
-          <span class="date">2026</span>
-          <span class="txt">Paper accepted at <b>IEEE Transactions on Evolutionary Computation (TEVC)</b> on adaptive mutation rates for move-acceptance hyper-heuristics.</span>
-        </li>
-        <li>
-          <span class="date">2026</span>
-          <span class="txt">Awarded the <b>Top-tier Graduate Academic Scholarship</b> and <b>Research Assistantship Award</b> at SUSTech (Top 15%).</span>
-        </li>
-        <li>
-          <span class="date">Sep 2025</span>
-          <span class="txt">Began my M.Sc. at SUSTech under Prof. Pietro S. Oliveto.</span>
-        </li>
+    <div class="exp">
+      <h3>Runtime Analysis of Complete Hyper-Heuristics</h3>
+      <div class="meta">Primary contributor &middot; advised by Prof. Pietro S. Oliveto &middot; Jan 2025 &ndash; Jun 2026</div>
+      <ul>
+        <li>Designed <b>Fast Adaptive MAHH<sub>&beta;</sub></b>, a complete hyper-heuristic combining heuristic selection and move acceptance; led the analysis, experiments, and first manuscript.</li>
+        <li>Established the <b>first rigorous runtime analysis of a complete hyper-heuristic</b> using both operators, with guarantees across pseudo-Boolean benchmark functions.</li>
+        <li>Key results: &Theta;(n log n) on OneMax, O(n&sup3;/d&sup2; + n log n) on Cliff<sub>d</sub>, and O(k log n &middot; C(n,k)) on Jump<sub>k</sub>.</li>
       </ul>
+      <p class="outcome"><span class="ev">Outcome:</span> accepted for publication in <b>IEEE Transactions on Evolutionary Computation (TEVC), 2026</b>.</p>
+    </div>
+
+    <div class="exp">
+      <h3>Runtime Analysis of Reinforcement Learning Hyper-Heuristics</h3>
+      <div class="meta">Primary contributor &middot; with Zhenyu Wang and Peizhou Wu, advised by Prof. Pietro S. Oliveto &middot; Sep 2025 &ndash; Present</div>
+      <ul>
+        <li>Proved the <b>first rigorous positive result</b> for a reinforcement-learning hyper-heuristic from the literature, showing RLHH optimizes LeadingOnes in the best possible expected runtime achievable with RLS<sub>1</sub> and RLS<sub>2</sub>.</li>
+        <li>Proposed and analyzed an <b>adaptive penalty mechanism</b> replacing a fixed, problem-dependent penalty with online recalibration; proved optimal runtimes on LeadingOnes and OneMax.</li>
+        <li>Key results: (1+ln 2)/4 &middot; n&sup2; + o(n&sup2;) on LeadingOnes; (1+o(1)) n ln n on OneMax &mdash; the first hyper-heuristic matching the unary unbiased black-box complexity of OneMax up to its leading constant.</li>
+      </ul>
+      <p class="outcome"><span class="ev">Outcomes:</span> published in <b>PPSN 2026</b>; follow-up <b>under review</b> at <b>AAAI 2027</b>.</p>
     </div>
   </section>
 
-  <!-- Research -->
-  <section id="research">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Research</p>
-        <h2>Research experience</h2>
-        <div class="bar"></div>
-      </div>
+  <section>
+    <h2>Publications</h2>
+    <p class="note">Author names are listed in alphabetical order, following the convention in theoretical computer science.</p>
 
-      <div class="edu" style="margin-bottom: 16px;">
-        <div class="item">
-          <div class="top"><span class="school">M.Sc., Computer Science &amp; Technology</span><span class="when">Sep 2025 – Jun 2028</span></div>
-          <div class="what">Southern University of Science and Technology (SUSTech), Shenzhen, China</div>
-          <div class="note">Advisor: Prof. Pietro S. Oliveto</div>
-        </div>
-        <div class="item">
-          <div class="top"><span class="school">B.Eng., Computer Science &amp; Technology</span><span class="when">Sep 2021 – Jun 2025</span></div>
-          <div class="what">China University of Geosciences (Wuhan), Wuhan, China</div>
-          <div class="note">GPA: 86 / 100</div>
-        </div>
-      </div>
+    <div class="pub">
+      <p class="title">Automatic Adaptation of Mutation Rates for Move Acceptance Hyper-Heuristics Using Hypermutations</p>
+      <p class="authors">Pietro S. Oliveto, <b>Mengqing Xu</b></p>
+      <p class="venue">IEEE Transactions on Evolutionary Computation (IEEE TEVC) &middot; <span class="status">2026</span></p>
+    </div>
 
-      <div class="proj">
-        <div class="card">
-          <div class="head"><h3>Runtime Analysis of Complete Hyper-Heuristics</h3><span class="span">Jan 2025 – Jun 2026</span></div>
-          <p class="who">Primary contributor · advised by Prof. Pietro S. Oliveto</p>
-          <ul>
-            <li>Designed <b>Fast Adaptive MAHH<sub>β</sub></b>, a complete hyper-heuristic combining heuristic selection and move acceptance; led the analysis, experiments, and first manuscript.</li>
-            <li>Established the <b>first rigorous runtime analysis of a complete hyper-heuristic</b> using both operators, with guarantees across pseudo-Boolean benchmark functions.</li>
-            <li><b>Key results:</b> Θ(n log n) on OneMax, O(n³/d² + n log n) on Cliff<sub>d</sub>, and O(k log n · C(n,k)) on Jump<sub>k</sub>.</li>
-          </ul>
-          <div class="outcome"><b>Outcome:</b> accepted for publication in <b>IEEE Transactions on Evolutionary Computation (TEVC), 2026</b>.</div>
-        </div>
+    <div class="pub">
+      <p class="title">On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics</p>
+      <p class="authors">Pietro S. Oliveto, Zhenyu Wang, Peizhou Wu, <b>Mengqing Xu</b></p>
+      <p class="venue">19th International Conference on Parallel Problem Solving from Nature (PPSN) &middot; <span class="status">2026</span></p>
+    </div>
 
-        <div class="card">
-          <div class="head"><h3>Runtime Analysis of Reinforcement Learning Hyper-Heuristics</h3><span class="span">Sep 2025 – Present</span></div>
-          <p class="who">Primary contributor · with Zhenyu Wang and Peizhou Wu, advised by Prof. Pietro S. Oliveto</p>
-          <ul>
-            <li>Proved the <b>first rigorous positive result</b> for a reinforcement-learning hyper-heuristic from the literature, showing RLHH optimizes LeadingOnes in the best possible expected runtime achievable with RLS₁ and RLS₂.</li>
-            <li>Proposed and analyzed an <b>adaptive penalty mechanism</b> replacing a fixed, problem-dependent penalty with online recalibration; proved optimal runtimes on LeadingOnes and OneMax.</li>
-            <li><b>Key results:</b> (1+ln 2)/4 · n² + o(n²) on LeadingOnes; (1+o(1)) n ln n on OneMax — the first hyper-heuristic matching the unary unbiased black-box complexity of OneMax up to its leading constant.</li>
-          </ul>
-          <div class="outcome"><b>Outcomes:</b> published in <b>PPSN 2026</b>; follow-up under review at <b>AAAI 2027</b>.</div>
-        </div>
-      </div>
+    <div class="pub">
+      <p class="title">Reinforcement Learning Hyper-Heuristics Using an Adaptive Penalty Parameter Can Achieve Optimal Runtime on Pseudo-Boolean Functions</p>
+      <p class="authors">Pietro S. Oliveto, Zhenyu Wang, Peizhou Wu, <b>Mengqing Xu</b></p>
+      <p class="venue">AAAI &middot; <span class="status">2027 (under review)</span></p>
     </div>
   </section>
 
-  <!-- Publications -->
-  <section id="publications">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Publications</p>
-        <h2>Publications</h2>
-        <div class="bar"></div>
-      </div>
-      <p class="pubs-note">Author names are listed in alphabetical order, following the convention in theoretical computer science.</p>
-      <div class="pub">
-        <div class="item">
-          <span class="badge">Accepted · IEEE TEVC</span>
-          <h3>Automatic Adaptation of Mutation Rates for Move Acceptance Hyper-Heuristics Using Hypermutations</h3>
-          <p class="authors">Pietro S. Oliveto, <b>Mengqing Xu</b></p>
-          <p class="venue">IEEE Transactions on Evolutionary Computation (IEEE TEVC), 2026</p>
-        </div>
-        <div class="item">
-          <span class="badge">Published · PPSN 2026</span>
-          <h3>On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics</h3>
-          <p class="authors">Pietro S. Oliveto, Zhenyu Wang, Peizhou Wu, <b>Mengqing Xu</b></p>
-          <p class="venue">19th International Conference on Parallel Problem Solving from Nature (PPSN 2026)</p>
-        </div>
-        <div class="item">
-          <span class="badge review">Under review · AAAI 2027</span>
-          <h3>Reinforcement Learning Hyper-Heuristics Using an Adaptive Penalty Parameter Can Achieve Optimal Runtime on Pseudo-Boolean Functions</h3>
-          <p class="authors">Pietro S. Oliveto, Zhenyu Wang, Peizhou Wu, <b>Mengqing Xu</b></p>
-          <p class="venue">AAAI 2027 (under review)</p>
-        </div>
-      </div>
-    </div>
+  <section>
+    <h2>Teaching</h2>
+    <ul class="plain">
+      <li><b>Teaching Assistant</b>, CS217: Data Structures and Algorithms Analysis (Honors), SUSTech &mdash; Fall 2025; Fall 2026.</li>
+      <li><b>Teaching Assistant</b>, CS338: Introduction to Theory of Computation, SUSTech &mdash; Spring 2026.</li>
+      <li><b>Presenter</b>, 19th International Conference on Parallel Problem Solving from Nature (PPSN 2026), Trento, Italy.</li>
+    </ul>
   </section>
 
-  <!-- Teaching -->
-  <section id="teaching">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Teaching</p>
-        <h2>Teaching &amp; service</h2>
-        <div class="bar"></div>
-      </div>
-      <div class="cols">
-        <div class="card-min">
-          <h3>Teaching Assistant</h3>
-          <div class="line"><span class="k">CS217 · Data Structures &amp; Algorithms Analysis (Honors)</span><span class="v">Fall 2025 · Fall 2026</span></div>
-          <div class="line"><span class="k">CS338 · Introduction to Theory of Computation</span><span class="v">Spring 2026</span></div>
-          <p style="margin:12px 0 0; color:var(--fg-faint); font-size:.85rem;">Southern University of Science and Technology (SUSTech)</p>
-        </div>
-        <div class="card-min">
-          <h3>Academic activity</h3>
-          <div class="line"><span class="k">Presenter, PPSN 2026</span><span class="v">Trento, Italy · 2026</span></div>
-          <p style="margin:12px 0 0; color:var(--fg-faint); font-size:.85rem;">Presented our work on reinforcement-learning hyper-heuristics.</p>
-        </div>
-      </div>
-    </div>
+  <section>
+    <h2>Honors &amp; Awards</h2>
+    <ul class="plain">
+      <li>Top-tier Graduate Academic Scholarship and Research Assistantship Award, SUSTech (Top 15%) &mdash; 2026.</li>
+      <li>Innovation and Entrepreneurship Scholarship, China University of Geosciences (Wuhan) &mdash; 2022.</li>
+      <li>Third Prize, National College Student Mathematical Modeling Competition &mdash; 2022.</li>
+      <li>Second Prize, Huazhong Cup Mathematical Modeling Competition &mdash; 2021.</li>
+    </ul>
   </section>
 
-  <!-- Awards & skills -->
-  <section id="awards">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Honors &amp; skills</p>
-        <h2>Honors, awards &amp; skills</h2>
-        <div class="bar"></div>
-      </div>
-      <div class="cols">
-        <div class="card-min">
-          <h3>Honors &amp; awards</h3>
-          <ul class="plain">
-            <li><b>Top-tier Graduate Academic Scholarship</b> &amp; Research Assistantship Award, SUSTech (Top 15%) <span class="v" style="color:var(--fg-faint);">— 2026</span></li>
-            <li><b>Innovation &amp; Entrepreneurship Scholarship</b>, China University of Geosciences (Wuhan) <span class="v" style="color:var(--fg-faint);">— 2022</span></li>
-            <li><b>Third Prize</b>, National College Student Mathematical Modeling Competition <span class="v" style="color:var(--fg-faint);">— 2022</span></li>
-            <li><b>Second Prize</b>, Huazhong Cup Mathematical Modeling Competition <span class="v" style="color:var(--fg-faint);">— 2021</span></li>
-          </ul>
-        </div>
-        <div class="card-min">
-          <h3>Skills</h3>
-          <div class="skill-grid">
-            <div class="skill-group">
-              <h3>Mathematics</h3>
-              <p>Probability theory, stochastic processes, drift analysis</p>
-            </div>
-            <div class="skill-group">
-              <h3>Programming</h3>
-              <p>Python, LaTeX</p>
-            </div>
-            <div class="skill-group">
-              <h3>Languages</h3>
-              <p>Chinese (native), English (fluent)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <section>
+    <h2>Skills</h2>
+    <ul class="plain">
+      <li><b>Mathematics:</b> probability theory, stochastic processes, drift analysis.</li>
+      <li><b>Programming:</b> Python, LaTeX.</li>
+      <li><b>Languages:</b> Chinese (native), English (fluent).</li>
+    </ul>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="contact">
-    <div class="wrap">
-      <div class="sec-head" style="text-align:center;">
-        <p class="eyebrow">Contact</p>
-        <h2>Get in touch</h2>
-        <div class="bar" style="margin-left:auto;margin-right:auto;"></div>
-      </div>
-      <p class="sub">I am always glad to discuss research, Ph.D. opportunities, or collaborations.</p>
-      <div class="contact-row">
-        <span class="contact-email">
-          <span id="emailText">xumq2025@mail.sustech.edu.cn</span>
-          <button class="copy-btn" id="copyEmail" type="button">Copy</button>
-        </span>
-        <a class="btn" href="https://scholar.google.com/citations?user=1UBB0nkAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
-        <a class="btn" href="mailto:xumq2025@mail.sustech.edu.cn">Send email</a>
-      </div>
-    </div>
-  </section>
+  <footer>
+    <p>&copy; 2026 Mengqing Xu &middot; <a href="#top">Back to top</a></p>
+  </footer>
 
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="name">Mengqing Xu</div>
-    <p style="margin:6px 0 0;">© 2026 Mengqing Xu · Static academic page</p>
-  </div>
-</footer>
-
-<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
-
-<script>
-  (function () {
-    var progress = document.getElementById('progress');
-    var backTop = document.getElementById('backTop');
-    var navToggle = document.getElementById('navToggle');
-    var navLinks = document.getElementById('navLinks');
-
-    function onScroll() {
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-      backTop.classList.toggle('show', window.scrollY > 600);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    backTop.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    navToggle.addEventListener('click', function () {
-      var open = navLinks.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    navLinks.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        navLinks.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    var copyBtn = document.getElementById('copyEmail');
-    copyBtn.addEventListener('click', function () {
-      var email = document.getElementById('emailText').textContent;
-      function done() { copyBtn.textContent = 'Copied'; setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600); }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(email).then(done).catch(function () {
-          var r = document.createRange();
-          r.selectNodeContents(document.getElementById('emailText'));
-          var s = window.getSelection();
-          s.removeAllRanges();
-          s.addRange(r);
-          done();
-        });
-      } else {
-        var r = document.createRange();
-        r.selectNodeContents(document.getElementById('emailText'));
-        var s = window.getSelection();
-        s.removeAllRanges();
-        s.addRange(r);
-        done();
-      }
-    });
-  })();
-</script>
+</div>
 
 </body>
 </html>
