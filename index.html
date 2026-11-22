@@ -91,6 +91,15 @@
   .exp .outcome .ev{ font-weight: bold; color: var(--accent-dark); }
 
   /* Publications */
+  .pub-group{
+    font-size: 1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--accent-dark);
+    margin: 18px 0 12px;
+  }
+  .pub-group:first-of-type{ margin-top: 16px; }
+  .pub-group + .pub{ margin-top: 0; }
   .pub{ margin-bottom: 18px; }
   .pub:last-child{ margin-bottom: 0; }
   .pub .title{ font-weight: bold; margin: 0 0 2px; }
@@ -159,7 +168,7 @@
     </div>
     <div class="edu">
       <div class="head">B.Eng., Computer Science and Technology</div>
-      <div class="meta">China University of Geosciences (Wuhan), Wuhan, China &mdash; Sep 2021 &ndash; Jun 2025</div>
+      <div class="meta">China University of Geosciences (CUG), Wuhan, China &mdash; Sep 2021 &ndash; Jun 2025</div>
       <!-- <div class="note">GPA: 86 / 100</div> -->
     </div>
   </section>
@@ -209,12 +218,7 @@
     <h2>Publications</h2>
     <p class="note">Author names are listed in alphabetical order.</p>
 
-    <div class="pub">
-      <p class="title">Automatic Adaptation of Mutation Rates for Move Acceptance Hyper-Heuristics Using Hypermutations</p>
-      <p class="authors">Pietro S. Oliveto, <b>Mengqing Xu</b></p>
-      <p class="venue">IEEE Transactions on Evolutionary Computation (IEEE TEVC) &middot; <span class="status">2026</span></p>
-    </div>
-
+    <h3 class="pub-group">Conference</h3>
     <div class="pub">
       <p class="title">On the Runtime Analysis of Reinforcement Learning Hyper-Heuristics</p>
       <p class="authors">Pietro S. Oliveto, Zhenyu Wang, Peizhou Wu, <b>Mengqing Xu</b></p>
@@ -226,6 +230,13 @@
       <p class="authors">Pietro S. Oliveto, Zhenyu Wang, Peizhou Wu, <b>Mengqing Xu</b></p>
       <p class="venue">AAAI &middot; <span class="status">2027 (under review)</span></p>
     </div> -->
+
+    <h3 class="pub-group">Journal</h3>
+    <div class="pub">
+      <p class="title">Automatic Adaptation of Mutation Rates for Move Acceptance Hyper-Heuristics Using Hypermutations</p>
+      <p class="authors">Pietro S. Oliveto, <b>Mengqing Xu</b></p>
+      <p class="venue">IEEE Transactions on Evolutionary Computation (IEEE TEVC) &middot; <span class="status">2026</span></p>
+    </div>
   </section>
 
   <section>
