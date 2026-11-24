@@ -260,12 +260,28 @@
   (function () {
     var el = document.getElementById('viewCount');
     if (!el) return;
-    fetch('https://abacus.jasoncameron.dev/hit/mengqing-xu-homepage/views')
+
+    var API     = 'https://abacus.jasoncameron.dev';
+    var NS      = 'mengqing-xu-homepage/views';
+    var WINDOW  = 5 * 60 * 1000;      // 去重窗口：5 分钟（毫秒）
+    var KEY     = 'pview_last_counted';
+
+    // 同一浏览器在 WINDOW 内重复访问，不再 +1，只读取当前数
+    var shouldCount = true;
+    try {
+      var last = Number(localStorage.getItem(KEY) || 0);
+      if (last && Date.now() - last < WINDOW) shouldCount = false;
+    } catch (e) { /* 隐私模式等无法读取，按正常计数处理 */ }
+
+    fetch(API + (shouldCount ? '/hit/' : '/get/') + NS)
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (d) {
         var n = Number(d.value);
         if (!isFinite(n)) throw new Error('bad value');
         el.textContent = n.toLocaleString();
+        if (shouldCount) {
+          try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+        }
       })
       .catch(function () { el.parentNode.hidden = true; });
   })();
