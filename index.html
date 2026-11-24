@@ -119,6 +119,9 @@
   }
   footer a{ color: var(--accent-dark); }
 
+  .views{ margin: 10px 0 0; font-size: .85rem; color: var(--fg-muted); }
+  .views .num{ font-weight: bold; color: var(--accent-dark); font-variant-numeric: tabular-nums; }
+
   @media (max-width: 640px){
     .wrap{ padding: 24px 14px 48px; }
     header{ flex-direction: column; text-align: center; gap: 18px; }
@@ -247,10 +250,26 @@
   </section> -->
 
   <footer>
-    <p>&copy; 2026 Mengqing Xu &middot; Last updated: November 9, 2026 &middot; <a href="#top">Back to top</a></p>
+    <p>&copy; 2026 Mengqing Xu &middot; Last updated: November 24, 2026 &middot; <a href="#top">Back to top</a></p>
+    <p class="views">Page views: <span class="num" id="viewCount">&mdash;</span></p>
   </footer>
 
 </div>
+
+<script>
+  (function () {
+    var el = document.getElementById('viewCount');
+    if (!el) return;
+    fetch('https://abacus.jasoncameron.dev/hit/mengqing-xu-homepage/views')
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        var n = Number(d.value);
+        if (!isFinite(n)) throw new Error('bad value');
+        el.textContent = n.toLocaleString();
+      })
+      .catch(function () { el.parentNode.hidden = true; });
+  })();
+</script>
 
 </body>
 </html>
